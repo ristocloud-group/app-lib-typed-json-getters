@@ -1,6 +1,6 @@
 name: typed_json_getters
 description: A Dart library providing type-safe getters for JSON maps with robust error handling.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/FrenkyDema/typed_json_getters
 
 environment:

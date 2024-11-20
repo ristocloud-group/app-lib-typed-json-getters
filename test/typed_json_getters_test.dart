@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
-
-import '../bin/src/extensions.dart';
+import 'package:typed_json_getters/typed_json_getters.dart';
 
 void main() {
   group('TypedJsonGettersExtension', () {

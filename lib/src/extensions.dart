@@ -1,3 +1,5 @@
+part of '../typed_json_getters.dart';
+
 /// Extension providing type-safe getters for Map<String, dynamic>
 extension TypedJsonGettersExtension on Map<String, dynamic> {
   /// Retrieves a value of type [T] for the given [key].

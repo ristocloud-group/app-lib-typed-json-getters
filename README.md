@@ -1,7 +1,7 @@
 # Typed JSON Getters
 
 [![pub package](https://img.shields.io/pub/v/typed_json_getters.svg)](https://pub.dev/packages/typed_json_getters)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/frenkydema/typed_json_getters/flutter.yml)](https://github.com/FrenkyDema/typed_json_getters/actions/workflows/flutter.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/frenkydema/typed_json_getters/dart.yml)](https://github.com/FrenkyDema/typed_json_getters/actions/workflows/dart.yml)
 [![Coverage Status](https://github.com/FrenkyDema/typed_json_getters/raw/gh-pages/coverage-badge.svg)](https://frenkydema.github.io/typed_json_getters/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 

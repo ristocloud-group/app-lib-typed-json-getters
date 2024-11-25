@@ -266,9 +266,7 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,flutter,dart,android!/example/pubspec.lock
 example/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux
-example/linux/flutter/ephemeral/.plugin_symlinks/risto_widgets
 example/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
 example/macos/Flutter/ephemeral/flutter_export_environment.sh
 example/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows
-example/windows/flutter/ephemeral/.plugin_symlinks/risto_widgets
 auto_git

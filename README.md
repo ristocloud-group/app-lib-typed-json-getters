@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/typed_json_getters.svg)](https://pub.dev/packages/typed_json_getters)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/ristocloud-group/app-lib-typed-json-getters/dart.yml)](https://github.com/ristocloud-group/app-lib-typed-json-getters/actions/workflows/dart.yml)
-[![Coverage Status](https://github.com/ristocloud-group/app-lib-typed-json-getters/raw/gh-pages/coverage-badge.svg)](https://ristocloudgroup.com/typed_json_getters/)
+[![Coverage Status](https://github.com/ristocloud-group/app-lib-typed-json-getters/raw/gh-pages/coverage-badge.svg)](https://ristocloud-group.github.io/app-lib-typed-json-getters/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 A Dart library providing type-safe getters for JSON maps (`Map<String, dynamic>`) with robust error handling and support for nested keys using dot notation.

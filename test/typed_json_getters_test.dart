@@ -42,6 +42,10 @@ void main() {
         'emptyList': [],
         'nullMap': null,
         'nullList': null,
+        'mapWithNulls': {
+          'mealCost': 0,
+          'effectiveDate': null,
+        }
       };
     });
 
@@ -180,6 +184,39 @@ void main() {
     test('getNullableMap<K, V> returns null if conversion fails', () {
       expect(json.getNullableMap<String, int>('mapValue'), null);
       expect(json.getNullableMap<String, String>('invalidMap'), null);
+    });
+
+    // Test for map with null values (User bug report fix)
+    group('Map with Null Values', () {
+      test('getMap<String, dynamic> preserves null values', () {
+        final result =
+            json.getMap<String, dynamic>('mapWithNulls', defaultValue: {});
+        expect(result['mealCost'], 0);
+        expect(result['effectiveDate'], null);
+        expect(result.containsKey('effectiveDate'), true);
+      });
+
+      test('getMap<String, int?> preserves null values if V is nullable', () {
+        final result =
+            json.getMap<String, int?>('mapWithNulls', defaultValue: {});
+        expect(result['mealCost'], 0);
+        expect(result['effectiveDate'], null);
+      });
+
+      test(
+          'getMap<String, int> returns defaultValue if map contains null and V is not nullable',
+          () {
+        // 'effectiveDate' is null, which is invalid for <String, int>
+        final result =
+            json.getMap<String, int>('mapWithNulls', defaultValue: {});
+        expect(result, {});
+      });
+
+      test('getNullableMap<String, dynamic> preserves null values', () {
+        final result = json.getNullableMap<String, dynamic>('mapWithNulls');
+        expect(result!['mealCost'], 0);
+        expect(result['effectiveDate'], null);
+      });
     });
 
     // Tests for empty and null values

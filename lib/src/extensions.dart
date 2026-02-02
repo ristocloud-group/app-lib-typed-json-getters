@@ -82,11 +82,21 @@ extension TypedJsonGettersExtension on Map<String, dynamic> {
     for (var entry in value.entries) {
       final keyConverted = _convertValue<K>(entry.key);
       final valueConverted = _convertValue<V>(entry.value);
-      if (keyConverted == null || valueConverted == null) {
-        // If any key or value fails, return defaultValue
+
+      if (keyConverted == null) {
         return defaultValue;
       }
-      result[keyConverted] = valueConverted;
+
+      // If conversion resulted in null, we must check if that's valid.
+      // It is INVALID if:
+      // 1. The original value was NOT null (meaning conversion failed), OR
+      // 2. The original value WAS null, but type V is not nullable (e.g., int).
+      if (valueConverted == null && (entry.value != null || null is! V)) {
+        return defaultValue;
+      }
+
+      // Safe cast because we verified nullability above
+      result[keyConverted] = valueConverted as V;
     }
     return result;
   }
@@ -104,11 +114,17 @@ extension TypedJsonGettersExtension on Map<String, dynamic> {
     for (var entry in value.entries) {
       final keyConverted = _convertValue<K>(entry.key);
       final valueConverted = _convertValue<V>(entry.value);
-      if (keyConverted == null || valueConverted == null) {
-        // If any key or value fails, return null
+
+      if (keyConverted == null) {
         return null;
       }
-      result[keyConverted] = valueConverted;
+
+      // Validation logic same as getMap
+      if (valueConverted == null && (entry.value != null || null is! V)) {
+        return null;
+      }
+
+      result[keyConverted] = valueConverted as V;
     }
     return result;
   }

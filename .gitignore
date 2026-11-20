@@ -270,3 +270,14 @@ example/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
 example/macos/Flutter/ephemeral/flutter_export_environment.sh
 example/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows
 auto_git
+# Local AI agent setup (rstgrp-init): never published
+.claude/
+.rstgrp/
+.superpowers/
+AGENTS.md
+CLAUDE.md
+CONTEXT.md
+docs/
+test/architecture/
+tool/
+*.local.json

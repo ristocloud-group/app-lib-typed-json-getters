@@ -1,6 +1,6 @@
 part of '../typed_json_getters.dart';
 
-/// Extension providing type-safe getters for Map<String, dynamic>
+/// Extension providing type-safe getters for `Map<String, dynamic>`
 extension TypedJsonGettersExtension on Map<String, dynamic> {
   /// Retrieves a value of type [T] for the given [key].
   ///
@@ -129,6 +129,119 @@ extension TypedJsonGettersExtension on Map<String, dynamic> {
     return result;
   }
 
+  /// Whether [key] is found and its value is not `null`, whatever its type.
+  ///
+  /// Tells a missing value from one that a typed getter could not convert:
+  /// `getWholeNumber('amount') == null && hasValue('amount')` is a malformed
+  /// amount.
+  bool hasValue(String key) => _extractValue(key) != null;
+
+  /// Retrieves the value for the given [key] only when it is a [String].
+  ///
+  /// - **Returns**: The string as it is.
+  /// - **Null Handling**: `null` when [key] is not found or the value is not a
+  ///   string. Unlike `getNullable<String>`, which writes any value as text, a
+  ///   number or a map is `null`.
+  String? getStrictString(String key) {
+    final value = _extractValue(key);
+    return value is String ? value : null;
+  }
+
+  /// Retrieves a decimal number for the given [key].
+  ///
+  /// - **Returns**: A number, or a numeric string with blanks around ignored
+  ///   and a comma decimal accepted (`"12,5"` is `12.5`), as a [double].
+  /// - **Null Handling**: `null` for anything else.
+  double? getDecimal(String key) => _decimalOrNull(_extractValue(key));
+
+  /// Retrieves the decimal numbers of the list under [key].
+  ///
+  /// - **Returns**: The entries read as in [getDecimal], in order; the other
+  ///   entries are skipped.
+  /// - **Default Value**: Empty when [key] is not found or is not a list.
+  List<double> getDecimalList(String key) {
+    final value = _extractValue(key);
+    if (value is! List) return const [];
+    return [
+      for (final item in value)
+        if (_decimalOrNull(item) case final double number) number,
+    ];
+  }
+
+  /// Retrieves a whole number for the given [key], never cut.
+  ///
+  /// - **Returns**: An `int`, a finite `double` with no fraction (`42.0`) or a
+  ///   string holding an integer (`"42"`, blanks around ignored).
+  /// - **Null Handling**: `null` for anything else, a fraction included
+  ///   (`42.5`, `"42.5"`): unlike `getNullable<int>`, which truncates it.
+  int? getWholeNumber(String key) => _wholeOrNull(_extractValue(key));
+
+  /// Retrieves the whole numbers of the list under [key].
+  ///
+  /// - **Returns**: The entries read as in [getWholeNumber], in order; the
+  ///   other entries are dropped, never cut.
+  /// - **Default Value**: Empty when [key] is not found or is not a list.
+  List<int> getWholeNumberList(String key) {
+    final value = _extractValue(key);
+    if (value is! List) return const [];
+    return [
+      for (final item in value)
+        if (_wholeOrNull(item) case final int whole) whole,
+    ];
+  }
+
+  /// Retrieves a boolean for the given [key] from its unambiguous encodings.
+  ///
+  /// - **Returns**: `true`/`false`, `1`/`0`, `"1"`/`"0"` or `"true"`/`"false"`
+  ///   (any case, blanks around ignored).
+  /// - **Null Handling**: `null` for anything else (`2`, `"yes"`), never a
+  ///   default.
+  bool? getFlag(String key) {
+    final value = _extractValue(key);
+    if (value is bool) return value;
+    if (value is num) {
+      if (value == 1) return true;
+      if (value == 0) return false;
+      return null;
+    }
+    if (value is String) {
+      return switch (value.trim().toLowerCase()) {
+        '1' || 'true' => true,
+        '0' || 'false' => false,
+        _ => null,
+      };
+    }
+    return null;
+  }
+
+  /// Retrieves the objects of the list under [key], in order.
+  ///
+  /// - **Default Value**: Empty when [key] is not found or is `null`.
+  /// - **Errors**: A value that is not a list throws [FormatException], and so
+  ///   does an entry that is not a `Map<String, dynamic>`; with
+  ///   [skipNonObjects] those entries are skipped. With [lenient] a value
+  ///   that is not a list is empty and the entries that are not objects are
+  ///   skipped.
+  List<Map<String, dynamic>> getObjectList(
+    String key, {
+    bool lenient = false,
+    bool skipNonObjects = false,
+  }) {
+    final value = _extractValue(key);
+    if (value == null) return const [];
+    if (value is! List) {
+      if (lenient) return const [];
+      throw FormatException('$key is not a list (${value.runtimeType})');
+    }
+    return [
+      for (final item in value)
+        if (item is Map<String, dynamic>)
+          item
+        else if (!lenient && !skipNonObjects)
+          throw FormatException('$key holds a ${item.runtimeType}'),
+    ];
+  }
+
   /// Extracts the value for the given [key], supporting nested keys using dot notation.
   dynamic _extractValue(String key) {
     final parts = key.split('.');
@@ -213,6 +326,23 @@ extension TypedJsonGettersExtension on Map<String, dynamic> {
     } else if (value is String) {
       return double.tryParse(value);
     }
+    return null;
+  }
+
+  static double? _decimalOrNull(dynamic value) {
+    if (value is num) return value.toDouble();
+    if (value is! String) return null;
+    return double.tryParse(value.trim().replaceAll(',', '.'));
+  }
+
+  static int? _wholeOrNull(dynamic value) {
+    if (value is int) return value;
+    if (value is double) {
+      return value.isFinite && value == value.truncateToDouble()
+          ? value.toInt()
+          : null;
+    }
+    if (value is String) return int.tryParse(value.trim());
     return null;
   }
 

@@ -281,3 +281,6 @@ docs/
 test/architecture/
 tool/
 *.local.json
+.superpowers/sdd/
+.superpowers/device/
+coverage/

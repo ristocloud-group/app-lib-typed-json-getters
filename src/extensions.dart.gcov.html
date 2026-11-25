@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryHi">94.5&nbsp;%</td>
-            <td class="headerCovTableEntry">127</td>
-            <td class="headerCovTableEntry">120</td>
+            <td class="headerCovTableEntryHi">95.1&nbsp;%</td>
+            <td class="headerCovTableEntry">142</td>
+            <td class="headerCovTableEntry">135</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2026-11-24 08:47:53</td>
+            <td class="headerValue">2026-11-25 09:58:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -167,26 +167,26 @@
 <span id="L105"><span class="lineNum">     105</span>              :   ///</span>
 <span id="L106"><span class="lineNum">     106</span>              :   /// - **Returns**: A `Map&lt;K, V&gt;` with all keys and values converted to types [K] and [V].</span>
 <span id="L107"><span class="lineNum">     107</span>              :   /// - **Null Handling**: If [key] is not found or any key/value cannot be converted to type [K], [V], returns `null`.</span>
-<span id="L108"><span class="lineNum">     108</span> <span class="tlaGNC">           1 :   Map&lt;K, V&gt;? getNullableMap&lt;K, V&gt;(String key) {</span></span>
-<span id="L109"><span class="lineNum">     109</span> <span class="tlaGNC">           1 :     final value = _extractValue(key);</span></span>
-<span id="L110"><span class="lineNum">     110</span> <span class="tlaGNC">           1 :     if (value == null || value is! Map) {</span></span>
+<span id="L108"><span class="lineNum">     108</span> <span class="tlaGNC">           2 :   Map&lt;K, V&gt;? getNullableMap&lt;K, V&gt;(String key) {</span></span>
+<span id="L109"><span class="lineNum">     109</span> <span class="tlaGNC">           2 :     final value = _extractValue(key);</span></span>
+<span id="L110"><span class="lineNum">     110</span> <span class="tlaGNC">           2 :     if (value == null || value is! Map) {</span></span>
 <span id="L111"><span class="lineNum">     111</span>              :       return null;</span>
 <span id="L112"><span class="lineNum">     112</span>              :     }</span>
-<span id="L113"><span class="lineNum">     113</span> <span class="tlaGNC">           1 :     final result = &lt;K, V&gt;{};</span></span>
-<span id="L114"><span class="lineNum">     114</span> <span class="tlaGNC">           2 :     for (var entry in value.entries) {</span></span>
-<span id="L115"><span class="lineNum">     115</span> <span class="tlaGNC">           2 :       final keyConverted = _convertValue&lt;K&gt;(entry.key);</span></span>
-<span id="L116"><span class="lineNum">     116</span> <span class="tlaGNC">           2 :       final valueConverted = _convertValue&lt;V&gt;(entry.value);</span></span>
+<span id="L113"><span class="lineNum">     113</span> <span class="tlaGNC">           2 :     final result = &lt;K, V&gt;{};</span></span>
+<span id="L114"><span class="lineNum">     114</span> <span class="tlaGNC">           4 :     for (var entry in value.entries) {</span></span>
+<span id="L115"><span class="lineNum">     115</span> <span class="tlaGNC">           4 :       final keyConverted = _convertValue&lt;K&gt;(entry.key);</span></span>
+<span id="L116"><span class="lineNum">     116</span> <span class="tlaGNC">           4 :       final valueConverted = _convertValue&lt;V&gt;(entry.value);</span></span>
 <span id="L117"><span class="lineNum">     117</span>              : </span>
 <span id="L118"><span class="lineNum">     118</span>              :       if (keyConverted == null) {</span>
 <span id="L119"><span class="lineNum">     119</span>              :         return null;</span>
 <span id="L120"><span class="lineNum">     120</span>              :       }</span>
 <span id="L121"><span class="lineNum">     121</span>              : </span>
 <span id="L122"><span class="lineNum">     122</span>              :       // Validation logic same as getMap</span>
-<span id="L123"><span class="lineNum">     123</span> <span class="tlaGNC">           2 :       if (valueConverted == null &amp;&amp; (entry.value != null || null is! V)) {</span></span>
+<span id="L123"><span class="lineNum">     123</span> <span class="tlaGNC">           4 :       if (valueConverted == null &amp;&amp; (entry.value != null || null is! V)) {</span></span>
 <span id="L124"><span class="lineNum">     124</span>              :         return null;</span>
 <span id="L125"><span class="lineNum">     125</span>              :       }</span>
 <span id="L126"><span class="lineNum">     126</span>              : </span>
-<span id="L127"><span class="lineNum">     127</span> <span class="tlaGNC">           1 :       result[keyConverted] = valueConverted as V;</span></span>
+<span id="L127"><span class="lineNum">     127</span> <span class="tlaGNC">           2 :       result[keyConverted] = valueConverted as V;</span></span>
 <span id="L128"><span class="lineNum">     128</span>              :     }</span>
 <span id="L129"><span class="lineNum">     129</span>              :     return result;</span>
 <span id="L130"><span class="lineNum">     130</span>              :   }</span>
@@ -204,9 +204,9 @@
 <span id="L142"><span class="lineNum">     142</span>              :   /// - **Null Handling**: `null` when [key] is not found or the value is not a</span>
 <span id="L143"><span class="lineNum">     143</span>              :   ///   string. Unlike `getNullable&lt;String&gt;`, which writes any value as text, a</span>
 <span id="L144"><span class="lineNum">     144</span>              :   ///   number or a map is `null`.</span>
-<span id="L145"><span class="lineNum">     145</span> <span class="tlaGNC">           1 :   String? getStrictString(String key) {</span></span>
-<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">           1 :     final value = _extractValue(key);</span></span>
-<span id="L147"><span class="lineNum">     147</span> <span class="tlaGNC">           1 :     return value is String ? value : null;</span></span>
+<span id="L145"><span class="lineNum">     145</span> <span class="tlaGNC">           2 :   String? getStrictString(String key) {</span></span>
+<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">           2 :     final value = _extractValue(key);</span></span>
+<span id="L147"><span class="lineNum">     147</span> <span class="tlaGNC">           2 :     return value is String ? value : null;</span></span>
 <span id="L148"><span class="lineNum">     148</span>              :   }</span>
 <span id="L149"><span class="lineNum">     149</span>              : </span>
 <span id="L150"><span class="lineNum">     150</span>              :   /// Retrieves a decimal number for the given [key].</span>
@@ -236,7 +236,7 @@
 <span id="L174"><span class="lineNum">     174</span>              :   ///   string holding an integer (`&quot;42&quot;`, blanks around ignored).</span>
 <span id="L175"><span class="lineNum">     175</span>              :   /// - **Null Handling**: `null` for anything else, a fraction included</span>
 <span id="L176"><span class="lineNum">     176</span>              :   ///   (`42.5`, `&quot;42.5&quot;`): unlike `getNullable&lt;int&gt;`, which truncates it.</span>
-<span id="L177"><span class="lineNum">     177</span> <span class="tlaGNC">           3 :   int? getWholeNumber(String key) =&gt; _wholeOrNull(_extractValue(key));</span></span>
+<span id="L177"><span class="lineNum">     177</span> <span class="tlaGNC">           6 :   int? getWholeNumber(String key) =&gt; _wholeOrNull(_extractValue(key));</span></span>
 <span id="L178"><span class="lineNum">     178</span>              : </span>
 <span id="L179"><span class="lineNum">     179</span>              :   /// Retrieves the whole numbers of the list under [key].</span>
 <span id="L180"><span class="lineNum">     180</span>              :   ///</span>
@@ -258,18 +258,18 @@
 <span id="L196"><span class="lineNum">     196</span>              :   ///   (any case, blanks around ignored).</span>
 <span id="L197"><span class="lineNum">     197</span>              :   /// - **Null Handling**: `null` for anything else (`2`, `&quot;yes&quot;`), never a</span>
 <span id="L198"><span class="lineNum">     198</span>              :   ///   default.</span>
-<span id="L199"><span class="lineNum">     199</span> <span class="tlaGNC">           1 :   bool? getFlag(String key) {</span></span>
-<span id="L200"><span class="lineNum">     200</span> <span class="tlaGNC">           1 :     final value = _extractValue(key);</span></span>
-<span id="L201"><span class="lineNum">     201</span> <span class="tlaGNC">           1 :     if (value is bool) return value;</span></span>
-<span id="L202"><span class="lineNum">     202</span> <span class="tlaGNC">           1 :     if (value is num) {</span></span>
-<span id="L203"><span class="lineNum">     203</span> <span class="tlaGNC">           1 :       if (value == 1) return true;</span></span>
-<span id="L204"><span class="lineNum">     204</span> <span class="tlaGNC">           1 :       if (value == 0) return false;</span></span>
+<span id="L199"><span class="lineNum">     199</span> <span class="tlaGNC">           2 :   bool? getFlag(String key) {</span></span>
+<span id="L200"><span class="lineNum">     200</span> <span class="tlaGNC">           2 :     final value = _extractValue(key);</span></span>
+<span id="L201"><span class="lineNum">     201</span> <span class="tlaGNC">           2 :     if (value is bool) return value;</span></span>
+<span id="L202"><span class="lineNum">     202</span> <span class="tlaGNC">           2 :     if (value is num) {</span></span>
+<span id="L203"><span class="lineNum">     203</span> <span class="tlaGNC">           2 :       if (value == 1) return true;</span></span>
+<span id="L204"><span class="lineNum">     204</span> <span class="tlaGNC">           2 :       if (value == 0) return false;</span></span>
 <span id="L205"><span class="lineNum">     205</span>              :       return null;</span>
 <span id="L206"><span class="lineNum">     206</span>              :     }</span>
-<span id="L207"><span class="lineNum">     207</span> <span class="tlaGNC">           1 :     if (value is String) {</span></span>
-<span id="L208"><span class="lineNum">     208</span> <span class="tlaGNC">           2 :       return switch (value.trim().toLowerCase()) {</span></span>
-<span id="L209"><span class="lineNum">     209</span> <span class="tlaGNC">           2 :         '1' || 'true' =&gt; true,</span></span>
-<span id="L210"><span class="lineNum">     210</span> <span class="tlaGNC">           2 :         '0' || 'false' =&gt; false,</span></span>
+<span id="L207"><span class="lineNum">     207</span> <span class="tlaGNC">           2 :     if (value is String) {</span></span>
+<span id="L208"><span class="lineNum">     208</span> <span class="tlaGNC">           4 :       return switch (value.trim().toLowerCase()) {</span></span>
+<span id="L209"><span class="lineNum">     209</span> <span class="tlaGNC">           4 :         '1' || 'true' =&gt; true,</span></span>
+<span id="L210"><span class="lineNum">     210</span> <span class="tlaGNC">           3 :         '0' || 'false' =&gt; false,</span></span>
 <span id="L211"><span class="lineNum">     211</span>              :         _ =&gt; null,</span>
 <span id="L212"><span class="lineNum">     212</span>              :       };</span>
 <span id="L213"><span class="lineNum">     213</span>              :     }</span>
@@ -304,119 +304,171 @@
 <span id="L242"><span class="lineNum">     242</span>              :     ];</span>
 <span id="L243"><span class="lineNum">     243</span>              :   }</span>
 <span id="L244"><span class="lineNum">     244</span>              : </span>
-<span id="L245"><span class="lineNum">     245</span>              :   /// Extracts the value for the given [key], supporting nested keys using dot notation.</span>
-<span id="L246"><span class="lineNum">     246</span> <span class="tlaGNC">           2 :   dynamic _extractValue(String key) {</span></span>
-<span id="L247"><span class="lineNum">     247</span> <span class="tlaGNC">           2 :     final parts = key.split('.');</span></span>
-<span id="L248"><span class="lineNum">     248</span>              :     dynamic value = this;</span>
-<span id="L249"><span class="lineNum">     249</span> <span class="tlaGNC">           4 :     for (final part in parts) {</span></span>
-<span id="L250"><span class="lineNum">     250</span> <span class="tlaGNC">           4 :       if (value is Map &amp;&amp; value.containsKey(part)) {</span></span>
-<span id="L251"><span class="lineNum">     251</span> <span class="tlaGNC">           2 :         value = value[part];</span></span>
-<span id="L252"><span class="lineNum">     252</span>              :       } else {</span>
-<span id="L253"><span class="lineNum">     253</span>              :         return null;</span>
-<span id="L254"><span class="lineNum">     254</span>              :       }</span>
-<span id="L255"><span class="lineNum">     255</span>              :     }</span>
-<span id="L256"><span class="lineNum">     256</span>              :     return value;</span>
-<span id="L257"><span class="lineNum">     257</span>              :   }</span>
-<span id="L258"><span class="lineNum">     258</span>              : </span>
-<span id="L259"><span class="lineNum">     259</span>              :   /// Converts [value] to type [T]. Returns null if conversion is not possible.</span>
-<span id="L260"><span class="lineNum">     260</span> <span class="tlaGNC">           1 :   static T? _convertValue&lt;T&gt;(dynamic value) {</span></span>
-<span id="L261"><span class="lineNum">     261</span>              :     if (value == null) {</span>
-<span id="L262"><span class="lineNum">     262</span>              :       return null;</span>
-<span id="L263"><span class="lineNum">     263</span>              :     }</span>
-<span id="L264"><span class="lineNum">     264</span>              : </span>
-<span id="L265"><span class="lineNum">     265</span> <span class="tlaGNC">           1 :     if (T == bool) {</span></span>
-<span id="L266"><span class="lineNum">     266</span> <span class="tlaGNC">           1 :       return _convertToBool(value) as T?;</span></span>
-<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">           1 :     } else if (T == String) {</span></span>
-<span id="L268"><span class="lineNum">     268</span> <span class="tlaGNC">           1 :       return _convertToString(value) as T?;</span></span>
-<span id="L269"><span class="lineNum">     269</span> <span class="tlaGNC">           1 :     } else if (T == int) {</span></span>
-<span id="L270"><span class="lineNum">     270</span> <span class="tlaGNC">           1 :       return _convertToInt(value) as T?;</span></span>
-<span id="L271"><span class="lineNum">     271</span> <span class="tlaGNC">           1 :     } else if (T == double) {</span></span>
-<span id="L272"><span class="lineNum">     272</span> <span class="tlaGNC">           1 :       return _convertToDouble(value) as T?;</span></span>
-<span id="L273"><span class="lineNum">     273</span> <span class="tlaGNC">           1 :     } else if (T == num) {</span></span>
-<span id="L274"><span class="lineNum">     274</span> <span class="tlaUNC">           0 :       return _convertToNum(value) as T?;</span></span>
-<span id="L275"><span class="lineNum">     275</span> <span class="tlaGNC">           2 :     } else if (T == List || T == Map) {</span></span>
-<span id="L276"><span class="lineNum">     276</span>              :       try {</span>
-<span id="L277"><span class="lineNum">     277</span>              :         return value as T;</span>
-<span id="L278"><span class="lineNum">     278</span>              :       } catch (e) {</span>
-<span id="L279"><span class="lineNum">     279</span>              :         return null;</span>
-<span id="L280"><span class="lineNum">     280</span>              :       }</span>
-<span id="L281"><span class="lineNum">     281</span>              :     } else {</span>
-<span id="L282"><span class="lineNum">     282</span>              :       try {</span>
-<span id="L283"><span class="lineNum">     283</span>              :         return value as T;</span>
-<span id="L284"><span class="lineNum">     284</span>              :       } catch (e) {</span>
-<span id="L285"><span class="lineNum">     285</span>              :         return null;</span>
-<span id="L286"><span class="lineNum">     286</span>              :       }</span>
-<span id="L287"><span class="lineNum">     287</span>              :     }</span>
+<span id="L245"><span class="lineNum">     245</span>              :   /// Retrieves a whole number for the given [key], read as in</span>
+<span id="L246"><span class="lineNum">     246</span>              :   /// [getWholeNumber].</span>
+<span id="L247"><span class="lineNum">     247</span>              :   ///</span>
+<span id="L248"><span class="lineNum">     248</span>              :   /// - **Errors**: [FormatException] (`&lt;key&gt; is not a whole number`) when</span>
+<span id="L249"><span class="lineNum">     249</span>              :   ///   [getWholeNumber] would return `null`.</span>
+<span id="L250"><span class="lineNum">     250</span> <span class="tlaGNC">           1 :   int getRequiredWholeNumber(String key) =&gt;</span></span>
+<span id="L251"><span class="lineNum">     251</span> <span class="tlaGNC">           1 :       getWholeNumber(key) ??</span></span>
+<span id="L252"><span class="lineNum">     252</span> <span class="tlaGNC">           2 :       (throw FormatException('$key is not a whole number'));</span></span>
+<span id="L253"><span class="lineNum">     253</span>              : </span>
+<span id="L254"><span class="lineNum">     254</span>              :   /// Retrieves the value for the given [key] when it is a [String], read as</span>
+<span id="L255"><span class="lineNum">     255</span>              :   /// in [getStrictString].</span>
+<span id="L256"><span class="lineNum">     256</span>              :   ///</span>
+<span id="L257"><span class="lineNum">     257</span>              :   /// - **Errors**: [FormatException] (`&lt;key&gt; is not a string`) when</span>
+<span id="L258"><span class="lineNum">     258</span>              :   ///   [getStrictString] would return `null`.</span>
+<span id="L259"><span class="lineNum">     259</span> <span class="tlaGNC">           1 :   String getRequiredString(String key) =&gt;</span></span>
+<span id="L260"><span class="lineNum">     260</span> <span class="tlaGNC">           3 :       getStrictString(key) ?? (throw FormatException('$key is not a string'));</span></span>
+<span id="L261"><span class="lineNum">     261</span>              : </span>
+<span id="L262"><span class="lineNum">     262</span>              :   /// Retrieves a boolean for the given [key], read as in [getFlag].</span>
+<span id="L263"><span class="lineNum">     263</span>              :   ///</span>
+<span id="L264"><span class="lineNum">     264</span>              :   /// - **Errors**: [FormatException] (`&lt;key&gt; is not a flag`) when [getFlag]</span>
+<span id="L265"><span class="lineNum">     265</span>              :   ///   would return `null`.</span>
+<span id="L266"><span class="lineNum">     266</span> <span class="tlaGNC">           1 :   bool getRequiredFlag(String key) =&gt;</span></span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">           3 :       getFlag(key) ?? (throw FormatException('$key is not a flag'));</span></span>
+<span id="L268"><span class="lineNum">     268</span>              : </span>
+<span id="L269"><span class="lineNum">     269</span>              :   /// Retrieves the object under [key].</span>
+<span id="L270"><span class="lineNum">     270</span>              :   ///</span>
+<span id="L271"><span class="lineNum">     271</span>              :   /// - **Returns**: A new `Map&lt;String, dynamic&gt;`; keys that are not strings</span>
+<span id="L272"><span class="lineNum">     272</span>              :   ///   are written as text, as in `getNullableMap&lt;String, dynamic&gt;`.</span>
+<span id="L273"><span class="lineNum">     273</span>              :   /// - **Errors**: [FormatException] (`&lt;key&gt; is not an object`) when [key] is</span>
+<span id="L274"><span class="lineNum">     274</span>              :   ///   not found or its value is not a map.</span>
+<span id="L275"><span class="lineNum">     275</span> <span class="tlaGNC">           1 :   Map&lt;String, dynamic&gt; getRequiredObject(String key) =&gt;</span></span>
+<span id="L276"><span class="lineNum">     276</span> <span class="tlaGNC">           1 :       getNullableMap&lt;String, dynamic&gt;(key) ??</span></span>
+<span id="L277"><span class="lineNum">     277</span> <span class="tlaGNC">           2 :       (throw FormatException('$key is not an object'));</span></span>
+<span id="L278"><span class="lineNum">     278</span>              : </span>
+<span id="L279"><span class="lineNum">     279</span>              :   /// Retrieves a date for the given [key], parsed with [DateTime.tryParse].</span>
+<span id="L280"><span class="lineNum">     280</span>              :   ///</span>
+<span id="L281"><span class="lineNum">     281</span>              :   /// - **Returns**: The date only when the value is a [String]; the time zone</span>
+<span id="L282"><span class="lineNum">     282</span>              :   ///   of the text is kept, so the caller chooses `.toLocal()`.</span>
+<span id="L283"><span class="lineNum">     283</span>              :   /// - **Null Handling**: `null` for a text that is not a date and for any</span>
+<span id="L284"><span class="lineNum">     284</span>              :   ///   other value: a number is never a date (`20261124` is `null`).</span>
+<span id="L285"><span class="lineNum">     285</span> <span class="tlaGNC">           1 :   DateTime? getDateTime(String key) {</span></span>
+<span id="L286"><span class="lineNum">     286</span> <span class="tlaGNC">           1 :     final value = _extractValue(key);</span></span>
+<span id="L287"><span class="lineNum">     287</span> <span class="tlaGNC">           2 :     return value is String ? DateTime.tryParse(value) : null;</span></span>
 <span id="L288"><span class="lineNum">     288</span>              :   }</span>
 <span id="L289"><span class="lineNum">     289</span>              : </span>
-<span id="L290"><span class="lineNum">     290</span> <span class="tlaGNC">           1 :   static bool? _convertToBool(dynamic value) {</span></span>
-<span id="L291"><span class="lineNum">     291</span> <span class="tlaGNC">           1 :     if (value is bool) {</span></span>
-<span id="L292"><span class="lineNum">     292</span>              :       return value;</span>
-<span id="L293"><span class="lineNum">     293</span> <span class="tlaGNC">           1 :     } else if (value is String) {</span></span>
-<span id="L294"><span class="lineNum">     294</span> <span class="tlaGNC">           1 :       final lowerValue = value.toLowerCase();</span></span>
-<span id="L295"><span class="lineNum">     295</span> <span class="tlaGNC">           1 :       if (lowerValue == 'true') return true;</span></span>
-<span id="L296"><span class="lineNum">     296</span> <span class="tlaGNC">           1 :       if (lowerValue == 'false') return false;</span></span>
-<span id="L297"><span class="lineNum">     297</span>              :     }</span>
-<span id="L298"><span class="lineNum">     298</span>              :     return null;</span>
-<span id="L299"><span class="lineNum">     299</span>              :   }</span>
-<span id="L300"><span class="lineNum">     300</span>              : </span>
-<span id="L301"><span class="lineNum">     301</span> <span class="tlaGNC">           1 :   static String? _convertToString(dynamic value) {</span></span>
-<span id="L302"><span class="lineNum">     302</span> <span class="tlaGNC">           1 :     if (value is String) {</span></span>
-<span id="L303"><span class="lineNum">     303</span>              :       return value;</span>
-<span id="L304"><span class="lineNum">     304</span>              :     } else if (value != null) {</span>
-<span id="L305"><span class="lineNum">     305</span> <span class="tlaGNC">           1 :       return value.toString();</span></span>
-<span id="L306"><span class="lineNum">     306</span>              :     }</span>
-<span id="L307"><span class="lineNum">     307</span>              :     return null;</span>
-<span id="L308"><span class="lineNum">     308</span>              :   }</span>
-<span id="L309"><span class="lineNum">     309</span>              : </span>
-<span id="L310"><span class="lineNum">     310</span> <span class="tlaGNC">           1 :   static int? _convertToInt(dynamic value) {</span></span>
-<span id="L311"><span class="lineNum">     311</span> <span class="tlaGNC">           1 :     if (value is int) {</span></span>
-<span id="L312"><span class="lineNum">     312</span>              :       return value;</span>
-<span id="L313"><span class="lineNum">     313</span> <span class="tlaGNC">           1 :     } else if (value is num) {</span></span>
-<span id="L314"><span class="lineNum">     314</span> <span class="tlaUNC">           0 :       return value.toInt();</span></span>
-<span id="L315"><span class="lineNum">     315</span> <span class="tlaGNC">           1 :     } else if (value is String) {</span></span>
-<span id="L316"><span class="lineNum">     316</span> <span class="tlaGNC">           1 :       return int.tryParse(value);</span></span>
-<span id="L317"><span class="lineNum">     317</span>              :     }</span>
-<span id="L318"><span class="lineNum">     318</span>              :     return null;</span>
-<span id="L319"><span class="lineNum">     319</span>              :   }</span>
-<span id="L320"><span class="lineNum">     320</span>              : </span>
-<span id="L321"><span class="lineNum">     321</span> <span class="tlaGNC">           1 :   static double? _convertToDouble(dynamic value) {</span></span>
-<span id="L322"><span class="lineNum">     322</span> <span class="tlaGNC">           1 :     if (value is double) {</span></span>
-<span id="L323"><span class="lineNum">     323</span>              :       return value;</span>
-<span id="L324"><span class="lineNum">     324</span> <span class="tlaGNC">           1 :     } else if (value is num) {</span></span>
-<span id="L325"><span class="lineNum">     325</span> <span class="tlaUNC">           0 :       return value.toDouble();</span></span>
-<span id="L326"><span class="lineNum">     326</span> <span class="tlaGNC">           1 :     } else if (value is String) {</span></span>
-<span id="L327"><span class="lineNum">     327</span> <span class="tlaGNC">           1 :       return double.tryParse(value);</span></span>
-<span id="L328"><span class="lineNum">     328</span>              :     }</span>
-<span id="L329"><span class="lineNum">     329</span>              :     return null;</span>
-<span id="L330"><span class="lineNum">     330</span>              :   }</span>
-<span id="L331"><span class="lineNum">     331</span>              : </span>
-<span id="L332"><span class="lineNum">     332</span> <span class="tlaGNC">           1 :   static double? _decimalOrNull(dynamic value) {</span></span>
-<span id="L333"><span class="lineNum">     333</span> <span class="tlaGNC">           2 :     if (value is num) return value.toDouble();</span></span>
-<span id="L334"><span class="lineNum">     334</span> <span class="tlaGNC">           1 :     if (value is! String) return null;</span></span>
-<span id="L335"><span class="lineNum">     335</span> <span class="tlaGNC">           3 :     return double.tryParse(value.trim().replaceAll(',', '.'));</span></span>
-<span id="L336"><span class="lineNum">     336</span>              :   }</span>
-<span id="L337"><span class="lineNum">     337</span>              : </span>
-<span id="L338"><span class="lineNum">     338</span> <span class="tlaGNC">           1 :   static int? _wholeOrNull(dynamic value) {</span></span>
-<span id="L339"><span class="lineNum">     339</span> <span class="tlaGNC">           1 :     if (value is int) return value;</span></span>
-<span id="L340"><span class="lineNum">     340</span> <span class="tlaGNC">           1 :     if (value is double) {</span></span>
-<span id="L341"><span class="lineNum">     341</span> <span class="tlaGNC">           3 :       return value.isFinite &amp;&amp; value == value.truncateToDouble()</span></span>
-<span id="L342"><span class="lineNum">     342</span> <span class="tlaGNC">           1 :           ? value.toInt()</span></span>
-<span id="L343"><span class="lineNum">     343</span>              :           : null;</span>
-<span id="L344"><span class="lineNum">     344</span>              :     }</span>
-<span id="L345"><span class="lineNum">     345</span> <span class="tlaGNC">           3 :     if (value is String) return int.tryParse(value.trim());</span></span>
-<span id="L346"><span class="lineNum">     346</span>              :     return null;</span>
-<span id="L347"><span class="lineNum">     347</span>              :   }</span>
-<span id="L348"><span class="lineNum">     348</span>              : </span>
-<span id="L349"><span class="lineNum">     349</span> <span class="tlaUNC">           0 :   static num? _convertToNum(dynamic value) {</span></span>
-<span id="L350"><span class="lineNum">     350</span> <span class="tlaUNC">           0 :     if (value is num) {</span></span>
-<span id="L351"><span class="lineNum">     351</span>              :       return value;</span>
-<span id="L352"><span class="lineNum">     352</span> <span class="tlaUNC">           0 :     } else if (value is String) {</span></span>
-<span id="L353"><span class="lineNum">     353</span> <span class="tlaUNC">           0 :       return num.tryParse(value);</span></span>
-<span id="L354"><span class="lineNum">     354</span>              :     }</span>
-<span id="L355"><span class="lineNum">     355</span>              :     return null;</span>
-<span id="L356"><span class="lineNum">     356</span>              :   }</span>
-<span id="L357"><span class="lineNum">     357</span>              : }</span>
+<span id="L290"><span class="lineNum">     290</span>              :   /// Retrieves a date for the given [key], read as in [getDateTime].</span>
+<span id="L291"><span class="lineNum">     291</span>              :   ///</span>
+<span id="L292"><span class="lineNum">     292</span>              :   /// - **Errors**: [FormatException] (`&lt;key&gt; is not a date`) when</span>
+<span id="L293"><span class="lineNum">     293</span>              :   ///   [getDateTime] would return `null`.</span>
+<span id="L294"><span class="lineNum">     294</span> <span class="tlaGNC">           1 :   DateTime getRequiredDateTime(String key) =&gt;</span></span>
+<span id="L295"><span class="lineNum">     295</span> <span class="tlaGNC">           3 :       getDateTime(key) ?? (throw FormatException('$key is not a date'));</span></span>
+<span id="L296"><span class="lineNum">     296</span>              : </span>
+<span id="L297"><span class="lineNum">     297</span>              :   /// Extracts the value for the given [key], supporting nested keys using dot notation.</span>
+<span id="L298"><span class="lineNum">     298</span> <span class="tlaGNC">           3 :   dynamic _extractValue(String key) {</span></span>
+<span id="L299"><span class="lineNum">     299</span> <span class="tlaGNC">           3 :     final parts = key.split('.');</span></span>
+<span id="L300"><span class="lineNum">     300</span>              :     dynamic value = this;</span>
+<span id="L301"><span class="lineNum">     301</span> <span class="tlaGNC">           6 :     for (final part in parts) {</span></span>
+<span id="L302"><span class="lineNum">     302</span> <span class="tlaGNC">           6 :       if (value is Map &amp;&amp; value.containsKey(part)) {</span></span>
+<span id="L303"><span class="lineNum">     303</span> <span class="tlaGNC">           3 :         value = value[part];</span></span>
+<span id="L304"><span class="lineNum">     304</span>              :       } else {</span>
+<span id="L305"><span class="lineNum">     305</span>              :         return null;</span>
+<span id="L306"><span class="lineNum">     306</span>              :       }</span>
+<span id="L307"><span class="lineNum">     307</span>              :     }</span>
+<span id="L308"><span class="lineNum">     308</span>              :     return value;</span>
+<span id="L309"><span class="lineNum">     309</span>              :   }</span>
+<span id="L310"><span class="lineNum">     310</span>              : </span>
+<span id="L311"><span class="lineNum">     311</span>              :   /// Converts [value] to type [T]. Returns null if conversion is not possible.</span>
+<span id="L312"><span class="lineNum">     312</span> <span class="tlaGNC">           2 :   static T? _convertValue&lt;T&gt;(dynamic value) {</span></span>
+<span id="L313"><span class="lineNum">     313</span>              :     if (value == null) {</span>
+<span id="L314"><span class="lineNum">     314</span>              :       return null;</span>
+<span id="L315"><span class="lineNum">     315</span>              :     }</span>
+<span id="L316"><span class="lineNum">     316</span>              : </span>
+<span id="L317"><span class="lineNum">     317</span> <span class="tlaGNC">           2 :     if (T == bool) {</span></span>
+<span id="L318"><span class="lineNum">     318</span> <span class="tlaGNC">           1 :       return _convertToBool(value) as T?;</span></span>
+<span id="L319"><span class="lineNum">     319</span> <span class="tlaGNC">           2 :     } else if (T == String) {</span></span>
+<span id="L320"><span class="lineNum">     320</span> <span class="tlaGNC">           2 :       return _convertToString(value) as T?;</span></span>
+<span id="L321"><span class="lineNum">     321</span> <span class="tlaGNC">           2 :     } else if (T == int) {</span></span>
+<span id="L322"><span class="lineNum">     322</span> <span class="tlaGNC">           1 :       return _convertToInt(value) as T?;</span></span>
+<span id="L323"><span class="lineNum">     323</span> <span class="tlaGNC">           2 :     } else if (T == double) {</span></span>
+<span id="L324"><span class="lineNum">     324</span> <span class="tlaGNC">           1 :       return _convertToDouble(value) as T?;</span></span>
+<span id="L325"><span class="lineNum">     325</span> <span class="tlaGNC">           2 :     } else if (T == num) {</span></span>
+<span id="L326"><span class="lineNum">     326</span> <span class="tlaUNC">           0 :       return _convertToNum(value) as T?;</span></span>
+<span id="L327"><span class="lineNum">     327</span> <span class="tlaGNC">           4 :     } else if (T == List || T == Map) {</span></span>
+<span id="L328"><span class="lineNum">     328</span>              :       try {</span>
+<span id="L329"><span class="lineNum">     329</span>              :         return value as T;</span>
+<span id="L330"><span class="lineNum">     330</span>              :       } catch (e) {</span>
+<span id="L331"><span class="lineNum">     331</span>              :         return null;</span>
+<span id="L332"><span class="lineNum">     332</span>              :       }</span>
+<span id="L333"><span class="lineNum">     333</span>              :     } else {</span>
+<span id="L334"><span class="lineNum">     334</span>              :       try {</span>
+<span id="L335"><span class="lineNum">     335</span>              :         return value as T;</span>
+<span id="L336"><span class="lineNum">     336</span>              :       } catch (e) {</span>
+<span id="L337"><span class="lineNum">     337</span>              :         return null;</span>
+<span id="L338"><span class="lineNum">     338</span>              :       }</span>
+<span id="L339"><span class="lineNum">     339</span>              :     }</span>
+<span id="L340"><span class="lineNum">     340</span>              :   }</span>
+<span id="L341"><span class="lineNum">     341</span>              : </span>
+<span id="L342"><span class="lineNum">     342</span> <span class="tlaGNC">           1 :   static bool? _convertToBool(dynamic value) {</span></span>
+<span id="L343"><span class="lineNum">     343</span> <span class="tlaGNC">           1 :     if (value is bool) {</span></span>
+<span id="L344"><span class="lineNum">     344</span>              :       return value;</span>
+<span id="L345"><span class="lineNum">     345</span> <span class="tlaGNC">           1 :     } else if (value is String) {</span></span>
+<span id="L346"><span class="lineNum">     346</span> <span class="tlaGNC">           1 :       final lowerValue = value.toLowerCase();</span></span>
+<span id="L347"><span class="lineNum">     347</span> <span class="tlaGNC">           1 :       if (lowerValue == 'true') return true;</span></span>
+<span id="L348"><span class="lineNum">     348</span> <span class="tlaGNC">           1 :       if (lowerValue == 'false') return false;</span></span>
+<span id="L349"><span class="lineNum">     349</span>              :     }</span>
+<span id="L350"><span class="lineNum">     350</span>              :     return null;</span>
+<span id="L351"><span class="lineNum">     351</span>              :   }</span>
+<span id="L352"><span class="lineNum">     352</span>              : </span>
+<span id="L353"><span class="lineNum">     353</span> <span class="tlaGNC">           2 :   static String? _convertToString(dynamic value) {</span></span>
+<span id="L354"><span class="lineNum">     354</span> <span class="tlaGNC">           2 :     if (value is String) {</span></span>
+<span id="L355"><span class="lineNum">     355</span>              :       return value;</span>
+<span id="L356"><span class="lineNum">     356</span>              :     } else if (value != null) {</span>
+<span id="L357"><span class="lineNum">     357</span> <span class="tlaGNC">           2 :       return value.toString();</span></span>
+<span id="L358"><span class="lineNum">     358</span>              :     }</span>
+<span id="L359"><span class="lineNum">     359</span>              :     return null;</span>
+<span id="L360"><span class="lineNum">     360</span>              :   }</span>
+<span id="L361"><span class="lineNum">     361</span>              : </span>
+<span id="L362"><span class="lineNum">     362</span> <span class="tlaGNC">           1 :   static int? _convertToInt(dynamic value) {</span></span>
+<span id="L363"><span class="lineNum">     363</span> <span class="tlaGNC">           1 :     if (value is int) {</span></span>
+<span id="L364"><span class="lineNum">     364</span>              :       return value;</span>
+<span id="L365"><span class="lineNum">     365</span> <span class="tlaGNC">           1 :     } else if (value is num) {</span></span>
+<span id="L366"><span class="lineNum">     366</span> <span class="tlaUNC">           0 :       return value.toInt();</span></span>
+<span id="L367"><span class="lineNum">     367</span> <span class="tlaGNC">           1 :     } else if (value is String) {</span></span>
+<span id="L368"><span class="lineNum">     368</span> <span class="tlaGNC">           1 :       return int.tryParse(value);</span></span>
+<span id="L369"><span class="lineNum">     369</span>              :     }</span>
+<span id="L370"><span class="lineNum">     370</span>              :     return null;</span>
+<span id="L371"><span class="lineNum">     371</span>              :   }</span>
+<span id="L372"><span class="lineNum">     372</span>              : </span>
+<span id="L373"><span class="lineNum">     373</span> <span class="tlaGNC">           1 :   static double? _convertToDouble(dynamic value) {</span></span>
+<span id="L374"><span class="lineNum">     374</span> <span class="tlaGNC">           1 :     if (value is double) {</span></span>
+<span id="L375"><span class="lineNum">     375</span>              :       return value;</span>
+<span id="L376"><span class="lineNum">     376</span> <span class="tlaGNC">           1 :     } else if (value is num) {</span></span>
+<span id="L377"><span class="lineNum">     377</span> <span class="tlaUNC">           0 :       return value.toDouble();</span></span>
+<span id="L378"><span class="lineNum">     378</span> <span class="tlaGNC">           1 :     } else if (value is String) {</span></span>
+<span id="L379"><span class="lineNum">     379</span> <span class="tlaGNC">           1 :       return double.tryParse(value);</span></span>
+<span id="L380"><span class="lineNum">     380</span>              :     }</span>
+<span id="L381"><span class="lineNum">     381</span>              :     return null;</span>
+<span id="L382"><span class="lineNum">     382</span>              :   }</span>
+<span id="L383"><span class="lineNum">     383</span>              : </span>
+<span id="L384"><span class="lineNum">     384</span> <span class="tlaGNC">           1 :   static double? _decimalOrNull(dynamic value) {</span></span>
+<span id="L385"><span class="lineNum">     385</span> <span class="tlaGNC">           2 :     if (value is num) return value.toDouble();</span></span>
+<span id="L386"><span class="lineNum">     386</span> <span class="tlaGNC">           1 :     if (value is! String) return null;</span></span>
+<span id="L387"><span class="lineNum">     387</span> <span class="tlaGNC">           3 :     return double.tryParse(value.trim().replaceAll(',', '.'));</span></span>
+<span id="L388"><span class="lineNum">     388</span>              :   }</span>
+<span id="L389"><span class="lineNum">     389</span>              : </span>
+<span id="L390"><span class="lineNum">     390</span> <span class="tlaGNC">           2 :   static int? _wholeOrNull(dynamic value) {</span></span>
+<span id="L391"><span class="lineNum">     391</span> <span class="tlaGNC">           2 :     if (value is int) return value;</span></span>
+<span id="L392"><span class="lineNum">     392</span> <span class="tlaGNC">           2 :     if (value is double) {</span></span>
+<span id="L393"><span class="lineNum">     393</span> <span class="tlaGNC">           6 :       return value.isFinite &amp;&amp; value == value.truncateToDouble()</span></span>
+<span id="L394"><span class="lineNum">     394</span> <span class="tlaGNC">           2 :           ? value.toInt()</span></span>
+<span id="L395"><span class="lineNum">     395</span>              :           : null;</span>
+<span id="L396"><span class="lineNum">     396</span>              :     }</span>
+<span id="L397"><span class="lineNum">     397</span> <span class="tlaGNC">           6 :     if (value is String) return int.tryParse(value.trim());</span></span>
+<span id="L398"><span class="lineNum">     398</span>              :     return null;</span>
+<span id="L399"><span class="lineNum">     399</span>              :   }</span>
+<span id="L400"><span class="lineNum">     400</span>              : </span>
+<span id="L401"><span class="lineNum">     401</span> <span class="tlaUNC">           0 :   static num? _convertToNum(dynamic value) {</span></span>
+<span id="L402"><span class="lineNum">     402</span> <span class="tlaUNC">           0 :     if (value is num) {</span></span>
+<span id="L403"><span class="lineNum">     403</span>              :       return value;</span>
+<span id="L404"><span class="lineNum">     404</span> <span class="tlaUNC">           0 :     } else if (value is String) {</span></span>
+<span id="L405"><span class="lineNum">     405</span> <span class="tlaUNC">           0 :       return num.tryParse(value);</span></span>
+<span id="L406"><span class="lineNum">     406</span>              :     }</span>
+<span id="L407"><span class="lineNum">     407</span>              :     return null;</span>
+<span id="L408"><span class="lineNum">     408</span>              :   }</span>
+<span id="L409"><span class="lineNum">     409</span>              : }</span>
         </pre>
               </td>
             </tr>

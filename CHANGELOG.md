@@ -1,3 +1,12 @@
+## 0.2.0 — 25/11/2026
+
+- Required readers for the fields a model cannot do without: `getRequiredWholeNumber`,
+  `getRequiredString`, `getRequiredFlag`, `getRequiredObject` and `getRequiredDateTime` return the
+  value or throw `FormatException('<key> is not a ...')` with the key as passed, dots included.
+- `getDateTime` parses a date only from a `String` (`DateTime.tryParse`), keeps its time zone and
+  gives `null` for a number, a map or a text that is not a date.
+- No existing method changes behaviour: nothing breaks for current users.
+
 ## 0.1.0
 
 - Strict readers for data that must not be guessed: `hasValue`, `getStrictString`, `getDecimal`,

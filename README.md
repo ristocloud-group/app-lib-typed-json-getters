@@ -14,6 +14,7 @@ A Dart library providing type-safe getters for JSON maps (`Map<String, dynamic>`
 - **Tolerant Conversion**: A value that cannot be converted gives the default (or `null`), never an exception.
 - **Nested Key Support**: Access nested JSON properties using dot notation (`user.details.age`).
 - **Strict Readers**: For payloads where a converted value would be wrong (amounts, flags, ids), read only the unambiguous encodings and get `null` for the rest.
+- **Required Readers**: For fields a model cannot do without, get the value or a `FormatException` that names the key.
 
 ## Installation
 
@@ -24,7 +25,7 @@ dependencies:
   typed_json_getters:
     git:
       url: https://github.com/ristocloud-group/app-lib-typed-json-getters
-      ref: v0.1.0
+      ref: v0.2.0
 ```
 
 Then import it:
@@ -101,6 +102,39 @@ final balance = payload.getWholeNumber('balanceCents');
 if (balance == null && payload.hasValue('balanceCents')) {
   throw const FormatException('balanceCents is not an integer');
 }
+```
+
+### Required readers
+
+For fields a model cannot be built without (ids, names, dates), these readers return the value or throw `FormatException` with the key as it was passed, dots included: the payload error is reported where it is, not as a `null` found later. They read the same encodings as the strict readers and support dot notation.
+
+| Method | Returns | Otherwise |
+| --- | --- | --- |
+| `getRequiredWholeNumber(key)` | an `int`, read as `getWholeNumber` | `FormatException('<key> is not a whole number')` |
+| `getRequiredString(key)` | a `String`, read as `getStrictString` | `FormatException('<key> is not a string')` |
+| `getRequiredFlag(key)` | a `bool`, read as `getFlag` | `FormatException('<key> is not a flag')` |
+| `getRequiredObject(key)` | the `Map<String, dynamic>` under the key; keys that are not strings are written as text, as in `getNullableMap<String, dynamic>` | `FormatException('<key> is not an object')` |
+| `getDateTime(key)` | a `DateTime` parsed with `DateTime.tryParse`, only from a `String` | `null`: a number, a map or a text that is not a date |
+| `getRequiredDateTime(key)` | a `DateTime`, read as `getDateTime` | `FormatException('<key> is not a date')` |
+
+`getDateTime` keeps the time zone of the text: call `.toLocal()` when you need local time. A number is never a date: `20261124` is `null`, while `DateTime.parse('20261124')` would accept the same digits as text.
+
+```dart
+final reservation = <String, dynamic>{
+  'ID': '42',
+  'Confirmed': 1,
+  'Date': '2026-11-24T12:30:00Z',
+  'MealType': {'ID': 3, 'Name': 'Pranzo'},
+};
+
+reservation.getRequiredWholeNumber('ID'); // 42
+reservation.getRequiredFlag('Confirmed'); // true
+reservation.getRequiredString('MealType.Name'); // 'Pranzo'
+reservation.getRequiredObject('MealType'); // {ID: 3, Name: Pranzo}
+reservation.getRequiredDateTime('Date').toLocal(); // local time of 12:30 UTC
+reservation.getDateTime('DeliveredAt'); // null
+reservation.getRequiredWholeNumber('MealType.Code');
+// throws FormatException: MealType.Code is not a whole number
 ```
 
 ## Examples

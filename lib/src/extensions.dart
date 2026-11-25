@@ -242,6 +242,58 @@ extension TypedJsonGettersExtension on Map<String, dynamic> {
     ];
   }
 
+  /// Retrieves a whole number for the given [key], read as in
+  /// [getWholeNumber].
+  ///
+  /// - **Errors**: [FormatException] (`<key> is not a whole number`) when
+  ///   [getWholeNumber] would return `null`.
+  int getRequiredWholeNumber(String key) =>
+      getWholeNumber(key) ??
+      (throw FormatException('$key is not a whole number'));
+
+  /// Retrieves the value for the given [key] when it is a [String], read as
+  /// in [getStrictString].
+  ///
+  /// - **Errors**: [FormatException] (`<key> is not a string`) when
+  ///   [getStrictString] would return `null`.
+  String getRequiredString(String key) =>
+      getStrictString(key) ?? (throw FormatException('$key is not a string'));
+
+  /// Retrieves a boolean for the given [key], read as in [getFlag].
+  ///
+  /// - **Errors**: [FormatException] (`<key> is not a flag`) when [getFlag]
+  ///   would return `null`.
+  bool getRequiredFlag(String key) =>
+      getFlag(key) ?? (throw FormatException('$key is not a flag'));
+
+  /// Retrieves the object under [key].
+  ///
+  /// - **Returns**: A new `Map<String, dynamic>`; keys that are not strings
+  ///   are written as text, as in `getNullableMap<String, dynamic>`.
+  /// - **Errors**: [FormatException] (`<key> is not an object`) when [key] is
+  ///   not found or its value is not a map.
+  Map<String, dynamic> getRequiredObject(String key) =>
+      getNullableMap<String, dynamic>(key) ??
+      (throw FormatException('$key is not an object'));
+
+  /// Retrieves a date for the given [key], parsed with [DateTime.tryParse].
+  ///
+  /// - **Returns**: The date only when the value is a [String]; the time zone
+  ///   of the text is kept, so the caller chooses `.toLocal()`.
+  /// - **Null Handling**: `null` for a text that is not a date and for any
+  ///   other value: a number is never a date (`20261124` is `null`).
+  DateTime? getDateTime(String key) {
+    final value = _extractValue(key);
+    return value is String ? DateTime.tryParse(value) : null;
+  }
+
+  /// Retrieves a date for the given [key], read as in [getDateTime].
+  ///
+  /// - **Errors**: [FormatException] (`<key> is not a date`) when
+  ///   [getDateTime] would return `null`.
+  DateTime getRequiredDateTime(String key) =>
+      getDateTime(key) ?? (throw FormatException('$key is not a date'));
+
   /// Extracts the value for the given [key], supporting nested keys using dot notation.
   dynamic _extractValue(String key) {
     final parts = key.split('.');
